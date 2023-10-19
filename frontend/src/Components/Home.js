@@ -38,6 +38,7 @@ const Home = () => {
         setProducts(res.data.products)
         setResPerPage(res.data.resPerPage)
         setProductsCount(res.data.productsCount)
+        setFilteredProductsCount(res.data.filteredProductsCount)
         setLoading(false)
     }
     useEffect(() => {
