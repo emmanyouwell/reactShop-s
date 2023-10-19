@@ -42,10 +42,14 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '', category='') => {
+    const getProducts = async (page = 1, keyword = '', category) => {
         let link = ''
 
-        link = `http://localhost:4001/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+        link = `http://localhost:4001/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        
+        if (category) {
+            link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+        }
 
         // link = `http://localhost:4001/api/v1/products`
 
