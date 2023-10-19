@@ -78,8 +78,8 @@ const Register = () => {
             setIsAuthenticated(false)
             setLoading(false)
             setUser(null)
-            setError(error.response.data.message)
-            console.log(error.response.data.message)
+            setError(error)
+            console.log(error)
         }
     }
 
