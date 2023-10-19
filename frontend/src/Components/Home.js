@@ -8,6 +8,20 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useParams } from "react-router-dom"
 
+const categories = [
+    'Electronics',
+    'Cameras',
+    'Laptops',
+    'Accessories',
+    'Headphones',
+    'Food',
+    "Books",
+    'Clothes/Shoes',
+    'Beauty/Health',
+    'Sports',
+    'Outdoor',
+    'Home'
+]
 const Home = () => {
     let { keyword } = useParams()
     const [loading, setLoading] = useState(true)
@@ -18,6 +32,7 @@ const Home = () => {
     const [resPerPage, setResPerPage] = useState(0)
     const [filteredProductsCount, setFilteredProductsCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
+    const [category, setCategory] = useState('');
 
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
     const Range = createSliderWithTooltip(Slider.Range);
@@ -27,10 +42,10 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '') => {
+    const getProducts = async (page = 1, keyword = '', category='') => {
         let link = ''
 
-        link = `http://localhost:4001/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+        link = `http://localhost:4001/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
 
         // link = `http://localhost:4001/api/v1/products`
 
@@ -45,8 +60,8 @@ const Home = () => {
         setLoading(false)
     }
     useEffect(() => {
-        getProducts(currentPage, keyword, price,)
-    }, [currentPage, keyword, price]);
+        getProducts(currentPage, keyword, price, category)
+    }, [currentPage, keyword, price, category]);
 
     let count = productsCount
     if (keyword) {
@@ -82,7 +97,7 @@ const Home = () => {
                                                 onChange={price => setPrice(price)}
                                             />
                                             <hr className="my-5" />
-                                            {/* <div className="mt-5">
+                                            <div className="mt-5">
                                                 <h4 className="mb-3">
                                                     Categories
                                                 </h4>
@@ -100,7 +115,7 @@ const Home = () => {
                                                         </li>
                                                     ))}
                                                 </ul>
-                                            </div> */}
+                                            </div>
 
                                         </div>
                                     </div>
