@@ -30,7 +30,7 @@ const Register = () => {
            setError()
         }
 
-    }, [error. isAuthenticated, navigate])
+    }, [error, isAuthenticated,])
 
     const submitHandler = (e) => {
         e.preventDefault();
