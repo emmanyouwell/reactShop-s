@@ -7,6 +7,7 @@ import ProductDetails from "./Components/Product/ProductDetails";
 import Login from "./Components/User/Login";
 import Register from './Components/User/Register';
 import Profile from "./Components/User/Profile";
+import UpdateProfile from "./Components/User/UpdateProfile";
 function App() {
 
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
+          <Route path="/me/update"  element={<UpdateProfile />} exact="true" />
+       
         </Routes>
       </Router>
       <Footer />
