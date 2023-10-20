@@ -14,7 +14,7 @@ const Header = () => {
     const logoutUser = async () => {
         try {
             await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
-            setUser('')
+            setUser({})
             logout(()=> navigate('/'))
         } catch (error) {
             toast.error(error.response.data.message)
