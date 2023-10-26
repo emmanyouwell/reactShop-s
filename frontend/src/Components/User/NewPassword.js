@@ -25,7 +25,7 @@ const NewPassword = () => {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/password/reset/${token}`, passwords, config)
             setSuccess(data.success)
         } catch (error) {
-            setError(error)
+            setError(error.response.data.message)
         }
     }
     useEffect(() => {
