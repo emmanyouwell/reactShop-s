@@ -4,7 +4,7 @@ import MetaData from '../Layout/MetaData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { getToken } from '../../utils/helpers';
+import { getToken, getUser } from '../../utils/helpers';
 
 const UpdatePassword = () => {
 
@@ -16,10 +16,12 @@ const UpdatePassword = () => {
     let navigate = useNavigate();
     const updatePassword = async (formData) => {
         console.log(formData)
+        
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
                     
                 }
             }
