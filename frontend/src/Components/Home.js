@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import MetaData from './Layout/Metadata'
+import MetaData from './Layout/MetaData'
 import axios from 'axios'
 import Pagination from 'react-js-pagination'
 import Product from './Product/Product'

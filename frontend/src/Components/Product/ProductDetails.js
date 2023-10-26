@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Carousel } from 'react-bootstrap'
 
 import Loader from '../Layout/Loader'
-import MetaData from '../Layout/Metadata'
+import MetaData from '../Layout/MetaData'
 
 // import { useAlert} from '@blaumaus/react-alert'
 import axios from 'axios'
