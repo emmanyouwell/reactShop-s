@@ -25,6 +25,10 @@ exports.newOrder = async (req, res, next) => {
         user: req.user._id
     })
 
+    if (!order) {
+        return res.status(400).json({ message: `Order not saved` })
+    }
+
     res.status(200).json({
         success: true,
         order
