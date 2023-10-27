@@ -1,25 +1,25 @@
-import React, { Fragment, useState, useEffect} from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../App.css'
 import Search from './Search'
 import axios from 'axios'
-import { logout, getUser} from '../../utils/helpers'
+import { logout, getUser } from '../../utils/helpers'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Header = ({cartItems}) => {
+const Header = ({ cartItems }) => {
     const [user, setUser] = useState({})
     const navigate = useNavigate()
     const logoutUser = async () => {
         try {
             await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
             setUser({})
-            logout(()=> navigate('/'))
+            logout(() => navigate('/'))
         } catch (error) {
             toast.error(error.response.data.message)
-            
-        } 
+
+        }
     }
     const logoutHandler = () => {
         logoutUser();
@@ -43,12 +43,12 @@ const Header = ({cartItems}) => {
                 </div>
 
                 <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-                <Link to="/cart" style={{ textDecoration: 'none' }} >
+                    <Link to="/cart" style={{ textDecoration: 'none' }} >
                         <span id="cart" className="ml-3">Cart</span>
                         <span className="ml-1" id="cart_count">{cartItems.length}</span>
                         {/*<span className="ml-1" id="cart_count">2</span>*/}
                     </Link>
-                {user ? (<div className="ml-4 dropdown d-inline">
+                    {user ? (<div className="ml-4 dropdown d-inline">
                         <Link to="#!" className="btn dropdown-toggle text-white mr-4" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <figure className="avatar avatar-nav">
                                 <img

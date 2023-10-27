@@ -68,6 +68,11 @@ function App() {
     }
 
   }
+  const removeItemFromCart = async (id) => {
+    setState({
+      ...state,
+      cartItems: state.cartItems.filter(i => i.product !== id)
+    })
 
   return (
     <div className="App">
@@ -88,8 +93,8 @@ function App() {
           <Route path="/cart" 
             element={<Cart 
             cartItems={state.cartItems} 
-            // addItemToCart={addItemToCart} 
-            // removeItemFromCart={removeItemFromCart} 
+            addItemToCart={addItemToCart} 
+            removeItemFromCart={removeItemFromCart} 
             />} exact="true" />
         </Routes>
       </Router>
