@@ -15,6 +15,7 @@ import Cart from "./Components/Cart/Cart";
 import Shipping from "./Components/Cart/Shipping";
 import ConfirmOrder from "./Components/Cart/ConfirmOrder";
 import Payment from "./Components/Cart/Payment";
+import OrderSuccess from "./Components/Cart/OrderSuccess";
 
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -111,6 +112,7 @@ function App() {
             <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
             <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
             <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
+            <Route path="/success" element={<OrderSuccess />}  />
         </Routes>
       </Router>
       <Footer />
