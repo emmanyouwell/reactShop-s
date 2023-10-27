@@ -60,6 +60,9 @@ const ProductsList = () => {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             navigate('/admin/products');
+            
+            setIsDeleted(false)
+            setDeleteError('')
 
         }
 
@@ -96,7 +99,8 @@ const ProductsList = () => {
                 {
                     label: 'Name',
                     field: 'name',
-                    sort: 'asc'
+                    sort: 'asc',
+                    
                 },
                 {
                     label: 'Price',
