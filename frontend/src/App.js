@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 import Home from './Components/Home';
@@ -21,10 +21,10 @@ function App() {
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
-      : [], 
-      shippingInfo: localStorage.getItem('shippingInfo')
-        ? JSON.parse(localStorage.getItem('shippingInfo'))
-        : {},
+      : [],
+    shippingInfo: localStorage.getItem('shippingInfo')
+      ? JSON.parse(localStorage.getItem('shippingInfo'))
+      : {},
   })
 
   const addItemToCart = async (id, quantity) => {
@@ -42,7 +42,7 @@ function App() {
 
       const isItemExist = state.cartItems.find(i => i.product === item.product)
       console.log(isItemExist, state)
-      
+
       if (isItemExist) {
         setState({
           ...state,
@@ -73,6 +73,7 @@ function App() {
       ...state,
       cartItems: state.cartItems.filter(i => i.product !== id)
     })
+  }
 
   return (
     <div className="App">
@@ -90,11 +91,11 @@ function App() {
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
-          <Route path="/cart" 
-            element={<Cart 
-            cartItems={state.cartItems} 
-            addItemToCart={addItemToCart} 
-            removeItemFromCart={removeItemFromCart} 
+          <Route path="/cart"
+            element={<Cart
+              cartItems={state.cartItems}
+              addItemToCart={addItemToCart}
+              removeItemFromCart={removeItemFromCart}
             />} exact="true" />
         </Routes>
       </Router>
