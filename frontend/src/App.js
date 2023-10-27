@@ -76,6 +76,14 @@ function App() {
     })
   }
 
+  const saveShippingInfo = async (data) => {
+    setState({
+      ...state,
+      shippingInfo: data
+    })
+    localStorage.setItem('shippingInfo', JSON.stringify(data))
+  }
+
   return (
     <div className="App">
 
