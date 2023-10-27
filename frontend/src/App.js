@@ -73,7 +73,7 @@ function App() {
     <div className="App">
 
       <Router>
-        <Header />
+        <Header cartItems={state.cartItems} />
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />

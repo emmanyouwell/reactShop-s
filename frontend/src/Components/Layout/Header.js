@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Header = () => {
+const Header = ({cartItems}) => {
     const [user, setUser] = useState({})
     const navigate = useNavigate()
     const logoutUser = async () => {
@@ -43,6 +43,11 @@ const Header = () => {
                 </div>
 
                 <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+                <Link to="/cart" style={{ textDecoration: 'none' }} >
+                        <span id="cart" className="ml-3">Cart</span>
+                        <span className="ml-1" id="cart_count">{cartItems.length}</span>
+                        {/*<span className="ml-1" id="cart_count">2</span>*/}
+                    </Link>
                 {user ? (<div className="ml-4 dropdown d-inline">
                         <Link to="#!" className="btn dropdown-toggle text-white mr-4" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <figure className="avatar avatar-nav">
@@ -70,8 +75,8 @@ const Header = () => {
                         </div>
                     </div>) : <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>}
 
-                    <span id="cart" className="ml-3">Cart</span>
-                    <span className="ml-1" id="cart_count">2</span>
+                    {/* <span id="cart" className="ml-3">Cart</span>
+                    <span className="ml-1" id="cart_count">2</span> */}
                 </div>
             </nav>
         </Fragment>
