@@ -50,6 +50,10 @@ exports.getSingleOrder = async (req, res, next) => {
 exports.myOrders = async (req, res, next) => {
     const orders = await Order.find({ user: req.user.id })
 
+    if (!orders) {
+        return res.status(404).json({ message: `Order found` })
+    }
+
     res.status(200).json({
         success: true,
         orders
