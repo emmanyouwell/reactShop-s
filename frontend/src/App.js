@@ -19,6 +19,7 @@ import OrderSuccess from "./Components/Cart/OrderSuccess";
 import ListOrders from "./Components/Order/ListOrders";
 import OrderDetails from "./Components/Order/OrderDetails";
 import Dashboard from "./Components/Admin/Dashboard";
+import ProductsList from "./Components/Admin/ProductsList";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -118,6 +119,7 @@ function App() {
             <Route path="/orders/me" element={<ListOrders />}  />
             <Route path="/order/:id" element={<OrderDetails />}  />
             <Route path="/dashboard" element={<Dashboard />}  />
+            <Route path="/admin/products" element={<ProductsList />}  />
         </Routes>
       </Router>
       <Footer />
