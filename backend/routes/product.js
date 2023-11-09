@@ -10,5 +10,5 @@ router.post('/admin/product/new',  isAuthenticatedUser, upload.array('images', 1
 router.get('/products',  getProducts)
 router.get('/product/:id', getSingleProduct);
 router.route('/admin/product/:id',isAuthenticatedUser, ).put(upload.array('images', 10), updateProduct).delete(deleteProduct);
-router.get('/admin/products', isAuthenticatedUser, getAdminProducts);
+router.get('/admin/products', isAuthenticatedUser, authorizeRoles('admin'), getAdminProducts);
 module.exports = router;

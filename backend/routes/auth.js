@@ -15,6 +15,6 @@ router.put('/password/update', isAuthenticatedUser, updatePassword)
 router.get('/me', isAuthenticatedUser, getUserProfile)
 router.put('/me/update', isAuthenticatedUser, updateProfile)
 
-router.get('/admin/users', isAuthenticatedUser, allUsers)
+router.get('/admin/users', isAuthenticatedUser, authorizeRoles('admin'), allUsers)
 router.route('/admin/user/:id').get(isAuthenticatedUser, getUserDetails ).delete(isAuthenticatedUser, deleteUser).put(isAuthenticatedUser,  updateUser)
 module.exports = router;
