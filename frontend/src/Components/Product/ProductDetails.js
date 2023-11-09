@@ -8,8 +8,8 @@ import MetaData from '../Layout/MetaData'
 import axios from 'axios'
 import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { getUser, getToken } from '../../utils/helpers'
-
+import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
+import ListReviews from '../Review/ListReviews'
 
 
 const ProductDetails = ({ cartItems, addItemToCart }) => {
@@ -133,7 +133,16 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
             });
             navigate('/')
         }
-    }, [id, error,]);
+        if (errorReview) {
+            errMsg(errorReview)
+            setErrorReview('')
+        }
+        if (success) {
+            successMsg('Reivew posted successfully')
+            setSuccess(false)
+
+        }
+    }, [id, error, success, errorReview]);
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
     // console.log(state.cartItems)
     // console.log(cart)
@@ -188,7 +197,7 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
                             <hr />
                             <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
 
-                            {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
+                            {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings} >
                                 Submit Your Review
                             </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>}
 
