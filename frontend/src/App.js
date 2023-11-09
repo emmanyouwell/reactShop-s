@@ -25,7 +25,7 @@ import UpdateProduct from "./Components/Admin/UpdateProduct";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import OrdersList from "./Components/Admin/OrdersList";
 function App() {
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
@@ -126,6 +126,10 @@ function App() {
           <Route
             path="/admin/product/:id"
             element={<UpdateProduct />} />
+          <Route
+            path="/admin/orders"
+            element={<OrdersList />}
+          />
         </Routes>
       </Router>
       <Footer />
