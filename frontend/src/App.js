@@ -26,6 +26,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import OrdersList from "./Components/Admin/OrdersList";
+import ProcessOrder from "./Components/Admin/ProcessOrder"
+
 function App() {
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
@@ -130,6 +132,9 @@ function App() {
             path="/admin/orders"
             element={<OrdersList />}
           />
+           <Route
+            path="/admin/order/:id"
+            element={<ProcessOrder />} />
         </Routes>
       </Router>
       <Footer />
