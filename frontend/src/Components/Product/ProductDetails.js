@@ -8,9 +8,11 @@ import MetaData from '../Layout/MetaData'
 import axios from 'axios'
 import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { getUser } from '../../utils/helpers'
+import { getUser, getToken } from '../../utils/helpers'
 
-const ProductDetails = ({cartItems, addItemToCart}) => {
+
+
+const ProductDetails = ({ cartItems, addItemToCart }) => {
 
     const [loading, setLoading] = useState(true)
     const [product, setProduct] = useState({})
@@ -22,7 +24,7 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
     const [errorReview, setErrorReview] = useState('');
     const [success, setSuccess] = useState('')
     const [user, setUser] = useState(getUser())
-   
+
 
 
     let { id } = useParams()
@@ -61,10 +63,67 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
         const qty = count.valueAsNumber - 1;
         setQuantity(qty)
     }
-  
 
-    const addToCart =  async () => {
+
+    const addToCart = async () => {
         await addItemToCart(id, quantity);
+    }
+    function setUserRatings() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.starValue = index + 1;
+            ['click', 'mouseover', 'mouseout'].forEach(function (e) {
+                star.addEventListener(e, showRatings);
+            })
+        })
+        function showRatings(e) {
+            stars.forEach((star, index) => {
+                if (e.type === 'click') {
+                    if (index < this.starValue) {
+                        star.classList.add('orange');
+                        setRating(this.starValue)
+                    } else {
+                        star.classList.remove('orange')
+                    }
+                }
+                if (e.type === 'mouseover') {
+                    if (index < this.starValue) {
+                        star.classList.add('yellow');
+                    } else {
+                        star.classList.remove('yellow')
+                    }
+                }
+                if (e.type === 'mouseout') {
+                    star.classList.remove('yellow')
+                }
+            })
+        }
+    }
+
+    const newReview = async (reviewData) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/review`, reviewData, config)
+            setSuccess(data.success)
+
+        } catch (error) {
+            setErrorReview(error.response.data.message)
+        }
+    }
+
+    const reviewHandler = () => {
+        const formData = new FormData();
+        formData.set('rating', rating);
+        formData.set('comment', comment);
+        formData.set('productId', id);
+        newReview(formData)
+
     }
     useEffect(() => {
         productDetails(id)
@@ -131,9 +190,9 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
 
                             {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
                                 Submit Your Review
-                            </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div> }
-                            
-                            
+                            </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>}
+
+
 
 
                             <div className="row mt-2 mb-5">
@@ -161,11 +220,12 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
                                                     <textarea
                                                         name="review"
                                                         id="review" className="form-control mt-3"
+                                                        value={comment}
+                                                        onChange={(e) => setComment(e.target.value)}
                                                     >
-
                                                     </textarea>
 
-                                                    <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close">Submit</button>
+                                                    <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close" onClick={reviewHandler}>Submit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,6 +233,11 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
 
                                 </div>
                             </div>
+                            {product.reviews && product.reviews.length > 0 && (
+
+                                <ListReviews reviews={product.reviews} />
+
+                            )}
                         </div>
                     </div>
                 </Fragment>
