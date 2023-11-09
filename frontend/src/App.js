@@ -132,10 +132,10 @@ function App() {
             path="/admin/orders"
             element={<OrdersList />}
           />
-           <Route
+          <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} />
-             <Route
+          <Route
             path="/admin/users"
             element={<UsersList />} />
         </Routes>
