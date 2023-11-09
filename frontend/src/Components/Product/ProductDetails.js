@@ -8,6 +8,7 @@ import MetaData from '../Layout/MetaData'
 import axios from 'axios'
 import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { getUser } from '../../utils/helpers'
 
 const ProductDetails = ({cartItems, addItemToCart}) => {
 
@@ -16,13 +17,12 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
     const [error, setError] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [cart, setCart] = useState([])
-    // const [state, setState] = useState({
-    //     cartItems: localStorage.getItem('cartItems')
-    //         ? JSON.parse(localStorage.getItem('cartItems'))
-    //         : [], shippingInfo: localStorage.getItem('shippingInfo')
-    //             ? JSON.parse(localStorage.getItem('shippingInfo'))
-    //             : {},
-    // })
+    const [rating, setRating] = useState(0)
+    const [comment, setComment] = useState('')
+    const [errorReview, setErrorReview] = useState('');
+    const [success, setSuccess] = useState('')
+    const [user, setUser] = useState(getUser())
+   
 
 
     let { id } = useParams()
@@ -129,15 +129,11 @@ const ProductDetails = ({cartItems, addItemToCart}) => {
                             <hr />
                             <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
 
-                            {/* {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
+                            {user ? <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
                                 Submit Your Review
-                            </button> 
-                                :*/}
-                            <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" >
-                                Submit Your Review
-                            </button>
-                            <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div>
-                            {/* } */}
+                            </button> : <div className="alert alert-danger mt-5" type='alert'>Login to post your review.</div> }
+                            
+                            
 
 
                             <div className="row mt-2 mb-5">

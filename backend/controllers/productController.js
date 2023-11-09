@@ -169,18 +169,31 @@ exports.updateProduct = async (req, res, next) => {
 	if (images !== undefined) {
 		// Deleting images associated with the product
 		for (let i = 0; i < product.images.length; i++) {
-			const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+			try {
+				let imageDataUri = product.images[i]
+			const result = await cloudinary.v2.uploader.destroy(`${imageDataUri.public_id}`)
+			} catch (error) {
+				console.log(error)
+			}
 		}
 	}
 	let imagesLinks = [];
 	for (let i = 0; i < images.length; i++) {
-		const result = await cloudinary.v2.uploader.upload(images[i], {
-			folder: 'products'
+		try {
+			let imageDataUri = images[i]
+		const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
+			folder: 'products',
+			width: 150,
+			crop: "scale",
 		});
 		imagesLinks.push({
 			public_id: result.public_id,
 			url: result.secure_url
 		})
+		} catch (error) {
+			console.log(error)
+		}
+		
 
 	}
 	req.body.images = imagesLinks
