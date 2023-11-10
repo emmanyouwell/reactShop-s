@@ -175,26 +175,26 @@ exports.customerSales = async (req, res, next) => {
         // },
 
         { $unwind: "$userDetails" },
-        {
-            $group: {
-                _id: "$user",
-                total: { $sum: "$totalPrice" },
-                doc: { "$first": "$$ROOT" },
-
-            }
-        },
-
-        {
-            $replaceRoot: {
-                newRoot: { $mergeObjects: [{ total: '$total' }, '$doc'] },
-            },
-        },
         // {
         //     $group: {
-        //         _id: "$userDetails.name",
-        //         total: { $sum: "$totalPrice" }
+        //         _id: "$user",
+        //         total: { $sum: "$totalPrice" },
+        //         doc: { "$first": "$$ROOT" },
+
         //     }
         // },
+
+        // {
+        //     $replaceRoot: {
+        //         newRoot: { $mergeObjects: [{ total: '$total' }, '$doc'] },
+        //     },
+        // },
+        {
+            $group: {
+                _id: "$userDetails.name",
+                total: { $sum: "$totalPrice" }
+            }
+        },
         {
             $project: {
                 _id: 0,
@@ -202,7 +202,7 @@ exports.customerSales = async (req, res, next) => {
                 total: 1,
             }
         },
-        { $sort: { total: -1 } },
+        { $sort: { total: 1 } },
 
     ])
     console.log(customerSales)
@@ -239,7 +239,8 @@ exports.salesPerMonth = async (req, res, next) => {
                 month: {
                     $let: {
                         vars: {
-                            monthsInString: [, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', ' Sept', 'Oct', 'Nov', 'Dec']
+                            monthsInString: [, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', ' Sept', 'Oct', 'Nov', 'Dec'],
+                            
                         },
                         in: {
                             $arrayElemAt: ['$$monthsInString', "$_id.month"]

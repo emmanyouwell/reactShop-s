@@ -1,4 +1,5 @@
 const Product = require('../models/product')
+const Order = require('../models/order')
 const APIFeatures = require('../utils/apiFeatures')
 const cloudinary = require('cloudinary')
 // exports.newProduct = async (req, res, next) => {
@@ -301,7 +302,7 @@ exports.productSales = async (req, res, next) => {
             },
         },
     ])
-	// return console.log(sales)
+	console.log(sales)
     
     if (!totalSales) {
 		return res.status(404).json({
