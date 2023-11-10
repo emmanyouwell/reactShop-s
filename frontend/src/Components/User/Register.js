@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Metadata from '../Layout/MetaData'
+import MetaData from '../Layout/MetaData'
 import axios from 'axios'
 
 const Register = () => {
@@ -86,7 +86,7 @@ const Register = () => {
 
     return (
         <Fragment>
-            <Metadata title={'Register User'} />
+            <MetaData title={'Register User'} />
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
