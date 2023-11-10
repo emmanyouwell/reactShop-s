@@ -87,7 +87,7 @@ export default function ProductSalesChart({ data }) {
                     }
                 </Pie>
                 <Tooltip />
-                <Legend layout="vertical" verticalAlign="top" align="right" />
+                <Legend layout="vertical" verticalAlign="top" align="center" />
             </PieChart>
         </ResponsiveContainer>
 
