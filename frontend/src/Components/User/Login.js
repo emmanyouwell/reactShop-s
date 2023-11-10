@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import Loader from '../Layout/Loader'
-import Metadata from '../Layout/MetaData'
+import MetaData from '../Layout/MetaData'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -53,7 +53,7 @@ const Login = () => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <Metadata title={'Login'} />
+                    <MetaData title={'Login'} />
 
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
