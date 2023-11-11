@@ -22,7 +22,7 @@ import Dashboard from "./Components/Admin/Dashboard";
 import ProductsList from "./Components/Admin/ProductsList";
 import NewProduct from "./Components/Admin/NewProduct";
 import UpdateProduct from "./Components/Admin/UpdateProduct";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast,  } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import OrdersList from "./Components/Admin/OrdersList";
