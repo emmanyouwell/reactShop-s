@@ -8,6 +8,8 @@ import Loader from './Layout/Loader'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../actions/productActions'
 
 const categories = [
     'Electronics',
@@ -25,6 +27,7 @@ const categories = [
 ]
 const Home = () => {
     let { keyword } = useParams()
+    const dispatch = useDispatch();
     
     const [currentPage, setCurrentPage] = useState(1)
     const [resPerPage, setResPerPage] = useState(0)
@@ -39,24 +42,18 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '', price, category = '') => {
-        let link = ''
+    // const getProducts = async (page = 1, keyword = '', price, category = '') => {
+       
 
-        link = `${process.env.REACT_APP_API}/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
+    //     console.log(link)
+    //     let res = await axios.get(link)
+    //     console.log(res)
 
-        if (category) {
-            link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
-        }
+    //     setResPerPage(res.data.resPerPage)
 
-        console.log(link)
-        let res = await axios.get(link)
-        console.log(res)
+    //     setFilteredProductsCount(res.data.filteredProductsCount)
 
-        setResPerPage(res.data.resPerPage)
-
-        setFilteredProductsCount(res.data.filteredProductsCount)
-
-    }
+    // }
     useEffect(() => {
         getProducts(currentPage, keyword, price, category)
     }, [currentPage, keyword, price, category]);
