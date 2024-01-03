@@ -28,10 +28,9 @@ const categories = [
 const Home = () => {
     let { keyword } = useParams()
     const dispatch = useDispatch();
-    
+    const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products);
+
     const [currentPage, setCurrentPage] = useState(1)
-    const [resPerPage, setResPerPage] = useState(0)
-    const [filteredProductsCount, setFilteredProductsCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
     const [category, setCategory] = useState('');
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -43,7 +42,7 @@ const Home = () => {
 
 
     // const getProducts = async (page = 1, keyword = '', price, category = '') => {
-       
+
 
     //     console.log(link)
     //     let res = await axios.get(link)
@@ -55,12 +54,12 @@ const Home = () => {
 
     // }
     useEffect(() => {
-        getProducts(currentPage, keyword, price, category)
-    }, [currentPage, keyword, price, category]);
+        dispatch(getProducts(currentPage, keyword, price, category))
+    }, [dispatch, currentPage, keyword, price, category]);
 
-   
+    let count = productsCount
     if (keyword) {
-        let count = filteredProductsCount
+        count = filteredProductsCount
     }
     return (
         <>
