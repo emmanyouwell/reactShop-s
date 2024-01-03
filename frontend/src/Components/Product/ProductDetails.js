@@ -10,6 +10,8 @@ import { toast, } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
 import ListReviews from '../Review/ListReviews'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductDetails, clearErrors, } from '../../actions/productActions'
 
 
 const ProductDetails = ({ cartItems, addItemToCart }) => {
