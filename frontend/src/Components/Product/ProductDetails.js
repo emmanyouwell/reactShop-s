@@ -15,7 +15,8 @@ import { getProductDetails, clearErrors, } from '../../actions/productActions'
 
 
 const ProductDetails = ({ cartItems, addItemToCart }) => {
-
+    const dispatch = useDispatch()
+    const { loading, error, product } = useSelector(state => state.productDetails);
     const [loading, setLoading] = useState(true)
     const [product, setProduct] = useState({})
     const [error, setError] = useState('')
