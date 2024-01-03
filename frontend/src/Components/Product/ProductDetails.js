@@ -17,9 +17,6 @@ import { getProductDetails, clearErrors, } from '../../actions/productActions'
 const ProductDetails = ({ cartItems, addItemToCart }) => {
     const dispatch = useDispatch()
     const { loading, error, product } = useSelector(state => state.productDetails);
-    const [loading, setLoading] = useState(true)
-    const [product, setProduct] = useState({})
-    const [error, setError] = useState('')
     const [quantity, setQuantity] = useState(1)
     const [cart, setCart] = useState([])
     const [rating, setRating] = useState(0)
@@ -35,24 +32,24 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
     // const alert = useAlert();
     // const { cartItems } = state
 
-    const productDetails = async (id) => {
-        let link = `http://localhost:4001/api/v1/product/${id}`
-        try {
-            let res = await axios.get(link)
-            setProduct(res.data.product)
-            setLoading(false)
+    // const productDetails = async (id) => {
+    //     let link = `http://localhost:4001/api/v1/product/${id}`
+    //     try {
+    //         let res = await axios.get(link)
+    //         setProduct(res.data.product)
+    //         setLoading(false)
 
-        } catch (err) {
-            console.log(err)
+    //     } catch (err) {
+    //         console.log(err)
 
-            // setLoading(false)
-            setError('Product not found')
-            setLoading(false)
-            // toast.error(error)
-            // toast.error(err.response.data.message)
-        }
+    //         // setLoading(false)
+    //         setError('Product not found')
+    //         setLoading(false)
+    //         // toast.error(error)
+    //         // toast.error(err.response.data.message)
+    //     }
 
-    }
+    // }
     const increaseQty = () => {
         const count = document.querySelector('.count')
         if (count.valueAsNumber >= product.stock) return;
@@ -129,7 +126,7 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
 
     }
     useEffect(() => {
-        productDetails(id)
+        dispatch(getProductDetails(id))
         if (error) {
             toast.error(error, {
                 position: toast.POSITION.TOP_LEFT
@@ -145,7 +142,7 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
             setSuccess(false)
 
         }
-    }, [id, error, success, errorReview]);
+    }, [, dispatch, id, error, success, errorReview]);
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
     // console.log(state.cartItems)
     // console.log(cart)
