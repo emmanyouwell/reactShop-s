@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
 import MetaData from './Layout/MetaData'
-import axios from 'axios'
+
 import Pagination from 'react-js-pagination'
 import Product from './Product/Product'
 import Loader from './Layout/Loader'
@@ -54,8 +54,10 @@ const Home = () => {
 
     // }
     useEffect(() => {
+        if(error)
+            console.log(error)
         dispatch(getProducts(currentPage, keyword, price, category))
-    }, [dispatch, currentPage, keyword, price, category]);
+    }, [dispatch, currentPage, keyword, price, category, error]);
 
     let count = productsCount
     if (keyword) {
