@@ -25,16 +25,12 @@ const categories = [
 ]
 const Home = () => {
     let { keyword } = useParams()
-    const [loading, setLoading] = useState(true)
-    const [products, setProducts] = useState([])
-    const [error, setError] = useState()
-    const [productsCount, setProductsCount] = useState(0)
+    
     const [currentPage, setCurrentPage] = useState(1)
     const [resPerPage, setResPerPage] = useState(0)
     const [filteredProductsCount, setFilteredProductsCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
     const [category, setCategory] = useState('');
-
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
     const Range = createSliderWithTooltip(Slider.Range);
 
@@ -43,11 +39,11 @@ const Home = () => {
     }
 
 
-    const getProducts = async (page = 1, keyword = '', price, category='') => {
+    const getProducts = async (page = 1, keyword = '', price, category = '') => {
         let link = ''
 
         link = `${process.env.REACT_APP_API}/api/v1/products/?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-        
+
         if (category) {
             link = `${process.env.REACT_APP_API}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
         }
@@ -55,19 +51,19 @@ const Home = () => {
         console.log(link)
         let res = await axios.get(link)
         console.log(res)
-        setProducts(res.data.products)
+
         setResPerPage(res.data.resPerPage)
-        setProductsCount(res.data.productsCount)
+
         setFilteredProductsCount(res.data.filteredProductsCount)
-        setLoading(false)
+
     }
     useEffect(() => {
         getProducts(currentPage, keyword, price, category)
     }, [currentPage, keyword, price, category]);
 
-    let count = productsCount
+   
     if (keyword) {
-        count = filteredProductsCount
+        let count = filteredProductsCount
     }
     return (
         <>
