@@ -126,6 +126,29 @@ export const loadUser = () => async (dispatch) => {
         })
     }
 }
+
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_PROFILE_REQUEST })
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            withCredentials: true,
+        }
+        const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData, config)
+        dispatch({
+            type: UPDATE_PROFILE_SUCCESS,
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PROFILE_FAIL,
+            payload: error.response.data.message
+        })
+    }
+
+}
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: CLEAR_ERRORS
