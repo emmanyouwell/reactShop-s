@@ -11,27 +11,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../actions/userActions'
 
 const Header = ({ cartItems }) => {
-    const [user, setUser] = useState({})
+    const dispatch = useDispatch();
+	const { user, loading } = useSelector(state => state.auth)
+    // const [user, setUser] = useState({})
     const navigate = useNavigate()
-    const logoutUser = async () => {
-        try {
-            await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
-            setUser({})
-            logout(() => navigate('/'))
-        } catch (error) {
-            toast.error(error.response.data.message)
+    // const logoutUser = async () => {
+    //     try {
+    //         await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`)
+    //         setUser({})
+    //         logout(() => navigate('/'))
+    //     } catch (error) {
+    //         toast.error(error.response.data.message)
 
-        }
-    }
+    //     }
+    // }
     const logoutHandler = () => {
-        logoutUser();
+        
+        dispatch(logout())
         toast.success('log out', {
             position: toast.POSITION.BOTTOM_RIGHT
         });
     }
-    useEffect(() => {
-        setUser(getUser())
-    }, [])
+    // useEffect(() => {
+    //     setUser(getUser())
+    // }, [])
     return (
         <Fragment>
             <nav className="navbar row">
