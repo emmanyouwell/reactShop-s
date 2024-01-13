@@ -84,6 +84,26 @@ export const login = (email, password) => async (dispatch) => {
         })
     }
 }
+
+export const logout = () => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        }
+        await axios.get(`${process.env.REACT_APP_API}/api/v1/logout`,config)
+        dispatch({
+            type: LOGOUT_SUCCESS,
+        })
+    } catch (error) {
+        dispatch({
+            type: LOGOUT_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: CLEAR_ERRORS

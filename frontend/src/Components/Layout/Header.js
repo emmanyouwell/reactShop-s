@@ -6,7 +6,9 @@ import axios from 'axios'
 import { logout, getUser } from '../../utils/helpers'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux'
 
+import { logout } from '../../actions/userActions'
 
 const Header = ({ cartItems }) => {
     const [user, setUser] = useState({})
