@@ -15,13 +15,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAdminProducts } from '../../actions/productActions'
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const { products } = useSelector(state => state.products)
+    const { products, loading } = useSelector(state => state.products)
     // const [products, setProducts] = useState([])
-    const [error, setError] = useState('')
+    // const [error, setError] = useState('')
     // const [users, setUsers] = useState([])
     // const [orders, setOrders] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [totalAmount, setTotalAmount] = useState([])
+    // const [loading, setLoading] = useState(true)
+    // const [totalAmount, setTotalAmount] = useState([])
     let outOfStock = 0;
     products.forEach(product => {
         if (product.stock === 0) {
@@ -133,7 +133,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Fragment>
+                            {/* <Fragment>
                                 <UserSalesChart />
                             </Fragment>
                             <Fragment>
@@ -141,7 +141,7 @@ const Dashboard = () => {
                             </Fragment>
                             <Fragment>
                                 <ProductSalesChart />
-                            </Fragment>
+                            </Fragment> */}
 
                         </Fragment>
 
