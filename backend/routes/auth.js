@@ -13,7 +13,7 @@ router.post('/password/forgot', forgotPassword);
 router.put('/password/reset/:token', resetPassword);
 router.put('/password/update', isAuthenticatedUser, updatePassword)
 router.get('/me', isAuthenticatedUser, getUserProfile)
-router.put('/me/update', isAuthenticatedUser, updateProfile)
+router.put('/me/update', isAuthenticatedUser, upload.single("avatar"), updateProfile)
 
 router.get('/admin/users', isAuthenticatedUser, authorizeRoles('admin'), allUsers)
 router.route('/admin/user/:id').get(isAuthenticatedUser, getUserDetails ).delete(isAuthenticatedUser, deleteUser).put(isAuthenticatedUser,  updateUser)
