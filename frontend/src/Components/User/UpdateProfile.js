@@ -5,69 +5,76 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
+import { updateProfile, loadUser, clearErrors } from '../../actions/userActions'
+
+import { UPDATE_PROFILE_RESET } from '../../constants/userConstants'
+import { useDispatch, useSelector } from 'react-redux'
 
 const UpdateProfile = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
+  const { error, isUpdated, loading } = useSelector(state => state.user)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [avatar, setAvatar] = useState('')
   const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
-  const [error, setError] = useState('')
-  const [user, setUser] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [isUpdated, setIsUpdated] = useState(false)
+  // const [error, setError] = useState('')
+  // const [user, setUser] = useState({})
+  // const [loading, setLoading] = useState(false)
+  // const [isUpdated, setIsUpdated] = useState(false)
   let navigate = useNavigate();
 
-  const getProfile = async () => {
-    const config = {
-      headers: {
-        // 'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getToken()}`
-      }
-    }
-    try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, config)
-      setUser(data.user)
-      if (user) {
-        setName(user.name);
-        setEmail(user.email);
-        setAvatarPreview(user.avatar.url)
-      }
-      setLoading(false)
+  // const getProfile = async () => {
+  //   const config = {
+  //     headers: {
+  //       // 'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${getToken()}`
+  //     }
+  //   }
+  //   try {
+  //     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, config)
+  //     setUser(data.user)
+  //     if (user) {
+  //       setName(user.name);
+  //       setEmail(user.email);
+  //       setAvatarPreview(user.avatar.url)
+  //     }
+  //     setLoading(false)
 
-    } catch (error) {
-      toast.error("invalid user or password", {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-    }
+  //   } catch (error) {
+  //     toast.error("invalid user or password", {
+  //       position: toast.POSITION.BOTTOM_RIGHT
+  //     })
+  //   }
 
-  }
+  // }
 
-  const updateProfile = async (userData) => {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${getToken()}`
-        }
-      }
-      const { data } = await axios.put('/api/v1/me/update', userData, config)
-      setIsUpdated(true)
-    } catch (error) {
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-    }
-  }
-  useEffect(() => {
-    getProfile()
+  // const updateProfile = async (userData) => {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //         'Authorization': `Bearer ${getToken()}`
+  //       }
+  //     }
+  //     const { data } = await axios.put('/api/v1/me/update', userData, config)
+  //     setIsUpdated(true)
+  //   } catch (error) {
+  //     toast.error(error.response.data.message, {
+  //       position: toast.POSITION.BOTTOM_RIGHT
+  //     })
+  //   }
+  // }
+  // useEffect(() => {
+  //   getProfile()
 
-    if (isUpdated) {
-      toast.success('User updated successfully', {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-      navigate('/me', { replace: true })
-    }
-  }, [])
+  //   if (isUpdated) {
+  //     toast.success('User updated successfully', {
+  //       position: toast.POSITION.BOTTOM_RIGHT
+  //     })
+  //     navigate('/me', { replace: true })
+  //   }
+  // }, [])
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -77,7 +84,7 @@ const UpdateProfile = () => {
     formData.set('email', email);
     formData.set('avatar', avatar);
 
-    (updateProfile(formData))
+    dispatch(updateProfile(formData))
   }
 
   const onChange = e => {
@@ -93,7 +100,26 @@ const UpdateProfile = () => {
     reader.readAsDataURL(e.target.files[0])
 
   }
-  console.log(user)
+  useEffect(() => {
+    console.log(isUpdated)
+    if (user) {
+        setName(user.name);
+        setEmail(user.email);
+        setAvatarPreview(user.avatar.url)
+    }
+    if (error) {
+        // alert.error(error);
+        dispatch(clearErrors());
+    }
+    if (isUpdated) {
+        // alert.success('User updated successfully')
+        dispatch(loadUser());
+        navigate('/me',{ replace: true })
+        dispatch({
+            type: UPDATE_PROFILE_RESET
+        })
+    }
+}, [dispatch, error, isUpdated, navigate, user])
   return (
     <Fragment>
       <MetaData title={'Update Profile'} />
