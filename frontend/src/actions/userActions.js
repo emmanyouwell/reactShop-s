@@ -38,10 +38,6 @@ import {
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {  useNavigate, } from 'react-router-dom'
-
 export const register = (userData) => async (dispatch) => {
     try {
         dispatch({ type: REGISTER_USER_REQUEST })

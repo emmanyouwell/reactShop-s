@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { register, clearErrors } from '../../actions/userActions'
 
 const Register = () => {
 
