@@ -11,9 +11,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getAdminProducts, 
-
-    clearErrors } from '../../actions/productActions'
+import {
+    getAdminProducts,
+    clearErrors
+} from '../../actions/productActions'
 
 const ProductsList = () => {
     const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const ProductsList = () => {
     //             position: toast.POSITION.BOTTOM_RIGHT
     //         })
     //         navigate('/admin/products');
-            
+
     //         setIsDeleted(false)
     //         setDeleteError('')
 
@@ -86,7 +87,7 @@ const ProductsList = () => {
         //     navigate('/admin/products');
         //     dispatch({ type: DELETE_PRODUCT_RESET })
         // }
-    }, [dispatch,  error, navigate, isDeleted, deleteError])
+    }, [dispatch, error, navigate, isDeleted, deleteError])
     // const deleteProduct = async (id) => {
     //     try {
     //         const config = {
@@ -119,7 +120,7 @@ const ProductsList = () => {
                     label: 'Name',
                     field: 'name',
                     sort: 'asc',
-                    
+
                 },
                 {
                     label: 'Price',
