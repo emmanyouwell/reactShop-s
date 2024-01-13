@@ -180,7 +180,7 @@ export const forgotPassword = (email) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await axios.post('/api/v1/password/forgot', email, config)
+        const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/password/forgot`, email, config)
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
             payload: data.message
