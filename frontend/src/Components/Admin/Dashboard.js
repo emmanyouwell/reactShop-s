@@ -14,11 +14,12 @@ import MonthlySalesChart from './MonthlySalesChart'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminProducts } from '../../actions/productActions'
 const Dashboard = () => {
-
-    const [products, setProducts] = useState([])
+    const dispatch = useDispatch();
+    const { products } = useSelector(state => state.products)
+    // const [products, setProducts] = useState([])
     const [error, setError] = useState('')
-    const [users, setUsers] = useState([])
-    const [orders, setOrders] = useState([])
+    // const [users, setUsers] = useState([])
+    // const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
     const [totalAmount, setTotalAmount] = useState([])
     let outOfStock = 0;
@@ -27,30 +28,30 @@ const Dashboard = () => {
             outOfStock += 1;
         }
     })
-    const getAdminProducts = async () => {
-        try {
+    // const getAdminProducts = async () => {
+    //     try {
 
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${getToken()}`
-                }
-            }
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data',
+    //                 'Authorization': `Bearer ${getToken()}`
+    //             }
+    //         }
 
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/products`, config)
-            console.log(data)
-            setProducts(data.products)
-            setLoading(false)
-        } catch (error) {
-            setError(error.response.data.message)
-        }
-    }
+    //         const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/products`, config)
+    //         console.log(data)
+    //         setProducts(data.products)
+    //         setLoading(false)
+    //     } catch (error) {
+    //         setError(error.response.data.message)
+    //     }
+    // }
 
     useEffect(() => {
-        getAdminProducts()
+        dispatch(getAdminProducts())
         // allOrders()
         // allUsers()
-    }, [])
+    }, [dispatch])
 
     return (
         <Fragment>
