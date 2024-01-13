@@ -6,37 +6,39 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState({})
+  const { user, loading } = useSelector(state => state.auth)
+  // const [loading, setLoading] = useState(true)
+  // const [user, setUser] = useState({})
 
 
-  const getProfile = async () => {
-    const config = {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`
-      }
-    }
-    try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, config)
-      console.log(data)
-      setUser(data.user)
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-      setLoading(true)
-    }
+  // const getProfile = async () => {
+  //   const config = {
+  //     headers: {
+  //       'Authorization': `Bearer ${getToken()}`
+  //     }
+  //   }
+  //   try {
+  //     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`, config)
+  //     console.log(data)
+  //     setUser(data.user)
+  //     setLoading(false)
+  //   } catch (error) {
+  //     console.log(error)
+  //     toast.error(error.response.data.message, {
+  //       position: toast.POSITION.BOTTOM_RIGHT
+  //     })
+  //     setLoading(true)
+  //   }
 
-  }
+  // }
 
-  useEffect(() => {
-    getProfile()
+  // useEffect(() => {
+  //   getProfile()
 
-  }, [])
+  // }, [])
   return (
     <Fragment>
       {loading ? <Loader /> : (
