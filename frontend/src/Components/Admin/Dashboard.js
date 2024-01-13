@@ -11,7 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import UserSalesChart from './UserSalesChart'
 import ProductSalesChart from './ProductSalesChart'
 import MonthlySalesChart from './MonthlySalesChart'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminProducts } from '../../actions/productActions'
 const Dashboard = () => {
 
     const [products, setProducts] = useState([])
