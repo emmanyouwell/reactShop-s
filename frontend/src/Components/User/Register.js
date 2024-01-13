@@ -14,16 +14,12 @@ const Register = () => {
         email: '',
         password: '',
     })
-
     const { name, email, password } = user;
-
     const [avatar, setAvatar] = useState('')
     const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.jpg')
     // const [isAuthenticated, setIsAuthenticated] = useState(false)
     // const [error, setError] = useState('')
     // const [loading, setLoading] = useState(true)
-   
-
     let navigate = useNavigate()
     // useEffect(() => {
     //     if (isAuthenticated) {

@@ -58,6 +58,32 @@ export const register = (userData) => async (dispatch) => {
         })
     }
 }
+
+export const login = (email, password) => async (dispatch) => {
+    try {
+        dispatch({ type: LOGIN_REQUEST })
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+               },
+            withCredentials: true,
+        }
+
+        const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/login`, { email, password }, config)
+       console.log(data.user)
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: data.user
+        })
+    } catch (error) {
+        console.log(error.response.data.message)
+      
+        dispatch({
+            type: LOGIN_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: CLEAR_ERRORS
