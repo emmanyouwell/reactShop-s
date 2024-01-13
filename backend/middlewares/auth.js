@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken")
 
 exports.isAuthenticatedUser = async (req, res, next) => {
     // console.log(req.header)
-    const token  = req.header('Authorization').split(' ')[1];
+    // const token  = req.header('Authorization').split(' ')[1];
     //  console.log(token)
+    const { token } = req.cookies
     if (!token) {
         return res.status(401).json({message:'Login first to access this resource'})
     }
