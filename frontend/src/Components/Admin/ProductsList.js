@@ -5,27 +5,28 @@ import { MDBDataTable } from 'mdbreact'
 import MetaData from '../Layout/MetaData'
 import Loader from '../Layout/Loader'
 import Sidebar from './SideBar'
-import { getToken } from '../../utils/helpers';
-import axios from 'axios'
-import { toast } from 'react-toastify';
+// 
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
     getAdminProducts,
+    deleteProduct,
     clearErrors
 } from '../../actions/productActions'
+import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
 
 const ProductsList = () => {
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector(state => state.products)
+    const { error: deleteError, isDeleted } = useSelector(state => state.product)
     // const [products, setProducts] = useState([])
     // const [error, setError] = useState('')
-    const [deleteError, setDeleteError] = useState('')
+    // const [deleteError, setDeleteError] = useState('')
     const [users, setUsers] = useState([])
     const [orders, setOrders] = useState([])
     // const [loading, setLoading] = useState(true)
-    const [isDeleted, setIsDeleted] = useState(false)
+    // const [isDeleted, setIsDeleted] = useState(false)
 
     let navigate = useNavigate()
     // const getAdminProducts = async () => {
@@ -80,13 +81,13 @@ const ProductsList = () => {
         if (error) {
             dispatch(clearErrors())
         }
-        // if (deleteError) {
-        //     dispatch(clearErrors())
-        // }
-        // if (isDeleted) {
-        //     navigate('/admin/products');
-        //     dispatch({ type: DELETE_PRODUCT_RESET })
-        // }
+        if (deleteError) {
+            dispatch(clearErrors())
+        }
+        if (isDeleted) {
+            navigate('/admin/products');
+            dispatch({ type: DELETE_PRODUCT_RESET })
+        }
     }, [dispatch, error, navigate, isDeleted, deleteError])
     // const deleteProduct = async (id) => {
     //     try {
@@ -161,7 +162,7 @@ const ProductsList = () => {
     }
 
     const deleteProductHandler = (id) => {
-        // deleteProduct(id)
+        dispatch(deleteProduct(id))
     }
 
     return (
