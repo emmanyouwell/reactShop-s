@@ -2,24 +2,28 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 
-const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
+const Cart = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { cartItems } = useSelector(state => state.cart)
 
     const increaseQty = (id, quantity, stock) => {
         const newQty = quantity + 1;
         if (newQty > stock) return;
-        addItemToCart(id, newQty);
+        dispatch(addItemToCart(id, newQty));
     }
 
     const decreaseQty = (id, quantity) => {
         const newQty = quantity - 1;
         if (newQty <= 0) return;
-        addItemToCart(id, newQty);
+        dispatch(addItemToCart(id, newQty));
     }
 
     const removeCartItemHandler = (id) => {
-        removeItemFromCart(id)
+        dispatch(removeItemFromCart(id))
     }
     const checkoutHandler = () => {
         navigate('/login?redirect=shipping')
