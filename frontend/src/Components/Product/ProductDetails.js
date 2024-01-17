@@ -12,9 +12,12 @@ import { getUser, getToken, successMsg, errMsg } from '../../utils/helpers'
 import ListReviews from '../Review/ListReviews'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductDetails, clearErrors, } from '../../actions/productActions'
+import { addItemToCart } from '../../actions/cartActions'
 
 
-const ProductDetails = ({ cartItems, addItemToCart }) => {
+
+// const ProductDetails = ({ cartItems, addItemToCart }) => {
+    const ProductDetails = () => {
     const dispatch = useDispatch()
     const { loading, error, product } = useSelector(state => state.productDetails);
     const [quantity, setQuantity] = useState(1)
@@ -65,8 +68,12 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
     }
 
 
-    const addToCart = async () => {
-        await addItemToCart(id, quantity);
+    // const addToCart = async () => {
+    //     await addItemToCart(id, quantity);
+    // }
+    const addToCart = () => {
+        dispatch(addItemToCart(id, quantity));
+        successMsg('Item Added to Cart')
     }
     function setUserRatings() {
         const stars = document.querySelectorAll('.star');
@@ -143,7 +150,7 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
 
         }
     }, [, dispatch, id, error, success, errorReview]);
-    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    // localStorage.setItem('cartItems', JSON.stringify(cartItems))
     // console.log(state.cartItems)
     // console.log(cart)
     return (

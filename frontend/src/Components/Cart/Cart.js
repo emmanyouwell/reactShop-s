@@ -28,7 +28,7 @@ const Cart = () => {
     const checkoutHandler = () => {
         navigate('/login?redirect=shipping')
     }
-    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    // localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
     return (
         <Fragment>
