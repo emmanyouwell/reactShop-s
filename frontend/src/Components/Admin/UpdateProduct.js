@@ -7,6 +7,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios';
 import { getToken } from '../../utils/helpers';
+import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions'
+
+import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const UpdateProduct = () => {
@@ -19,11 +23,16 @@ const UpdateProduct = () => {
     const [images, setImages] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([])
-    const [error, setError] = useState('')
-    const [product, setProduct] = useState({})
-    const [loading, setLoading] = useState(true)
-    const [updateError, setUpdateError] = useState('')
-    const [isUpdated, setIsUpdated] = useState(false)
+    // const [error, setError] = useState('')
+    // const [product, setProduct] = useState({})
+    // const [loading, setLoading] = useState(true)
+    // const [updateError, setUpdateError] = useState('')
+    // const [isUpdated, setIsUpdated] = useState(false)
+    const dispatch = useDispatch();
+
+    const { error, product } = useSelector(state => state.productDetails)
+
+    const { loading, error: updateError, isUpdated } = useSelector(state => state.product);
 
     const categories = [
         'Electronics',
@@ -49,38 +58,67 @@ const UpdateProduct = () => {
         position: toast.POSITION.BOTTOM_CENTER
     });
 
-    const getProductDetails =  async (id) => {
-        try {
-           const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/${id}`)
-           setProduct(data.product)
-           setLoading(false)
-           
-        } catch (error) {
-            setError(error.response.data.message)
-            
-        }
-    }
-      
-    const updateProduct = async (id, productData)  => {
-        try {
-           
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json', 
-                    'Authorization': `Bearer ${getToken()}`
-                }
-            }
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`, productData, config)
-            setIsUpdated(data.success)
-           
-        } catch (error) {
-            setUpdateError(error.response.data.message)
-            
-        }
-    }
+    // const getProductDetails =  async (id) => {
+    //     try {
+    //        const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/${id}`)
+    //        setProduct(data.product)
+    //        setLoading(false)
+
+    //     } catch (error) {
+    //         setError(error.response.data.message)
+
+    //     }
+    // }
+
+    // const updateProduct = async (id, productData)  => {
+    //     try {
+
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json', 
+    //                 'Authorization': `Bearer ${getToken()}`
+    //             }
+    //         }
+    //         const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/product/${id}`, productData, config)
+    //         setIsUpdated(data.success)
+
+    //     } catch (error) {
+    //         setUpdateError(error.response.data.message)
+
+    //     }
+    // }
+    // useEffect(() => {
+    //     if (product && product._id !== id) {
+    //         getProductDetails(id)
+    //     } else {
+    //         setName(product.name);
+    //         setPrice(product.price);
+    //         setDescription(product.description);
+    //         setCategory(product.category);
+    //         setSeller(product.seller);
+    //         setStock(product.stock)
+    //         setOldImages(product.images)
+    //     }
+    //     if (error) {
+    //         errMsg(error)
+
+    //     }
+    //     if (updateError) {
+    //         errMsg(updateError);
+
+    //     }
+    //     if (isUpdated) {
+    //         navigate('/admin/products');
+    //         successMsg('Product updated successfully');
+
+    //     }
+    // }, [error, isUpdated, updateError, product, id])
     useEffect(() => {
+
         if (product && product._id !== id) {
-            getProductDetails(id)
+
+            dispatch(getProductDetails(id));
+
         } else {
             setName(product.name);
             setPrice(product.price);
@@ -92,19 +130,23 @@ const UpdateProduct = () => {
         }
         if (error) {
             errMsg(error)
-            
+            dispatch(clearErrors())
         }
         if (updateError) {
             errMsg(updateError);
-           
+            dispatch(clearErrors())
         }
         if (isUpdated) {
             navigate('/admin/products');
             successMsg('Product updated successfully');
-           
-        }
-    }, [error, isUpdated, updateError, product, id])
 
+            dispatch({ type: UPDATE_PRODUCT_RESET })
+
+        }
+
+
+
+    }, [dispatch, error, isUpdated, navigate, updateError, product, id])
     const submitHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -117,7 +159,7 @@ const UpdateProduct = () => {
         images.forEach(image => {
             formData.append('images', image)
         })
-        updateProduct(product._id, formData)
+        dispatch(updateProduct(product._id, formData))
     }
     const onChange = e => {
         const files = Array.from(e.target.files)
