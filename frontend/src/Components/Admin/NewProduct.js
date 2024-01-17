@@ -118,33 +118,33 @@ const NewProduct = () => {
         }
 
     }, [error, ])
-    useEffect(() => {
+    // useEffect(() => {
 
 
 
-        if (error) {
-            toast.error(error, {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-            dispatch(clearErrors())
+    //     if (error) {
+    //         toast.error(error, {
+    //             position: toast.POSITION.BOTTOM_RIGHT
+    //         })
+    //         dispatch(clearErrors())
 
-        }
+    //     }
 
-        if (success) {
+    //     if (success) {
 
-            navigate('/admin/products');
+    //         navigate('/admin/products');
 
-            toast.success('Product created successfully', {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+    //         toast.success('Product created successfully', {
+    //             position: toast.POSITION.BOTTOM_RIGHT
+    //         })
 
-            dispatch({ type: NEW_PRODUCT_RESET })
+    //         dispatch({ type: NEW_PRODUCT_RESET })
 
-        }
+    //     }
 
 
 
-    }, [dispatch, error, success,navigate])
+    // }, [dispatch, error, success,navigate])
 
 
     return (
