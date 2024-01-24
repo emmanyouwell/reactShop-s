@@ -13,9 +13,11 @@ import ProductSalesChart from './ProductSalesChart'
 import MonthlySalesChart from './MonthlySalesChart'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminProducts } from '../../actions/productActions'
+import { allOrders } from '../../actions/orderActions'
 const Dashboard = () => {
     const dispatch = useDispatch();
     const { products, loading } = useSelector(state => state.products)
+    const { orders, totalAmount, } = useSelector(state => state.allOrders)
     // const [products, setProducts] = useState([])
     // const [error, setError] = useState('')
     // const [users, setUsers] = useState([])
@@ -49,7 +51,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(getAdminProducts())
-        // allOrders()
+        dispatch(allOrders())
         // allUsers()
     }, [dispatch])
 
@@ -96,9 +98,9 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-danger o-hidden h-100">
 
-                                        {/* <div className="card-body">
+                                        <div className="card-body">
                                             <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
-                                        </div> */}
+                                        </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                             <span className="float-left">View Details</span>
