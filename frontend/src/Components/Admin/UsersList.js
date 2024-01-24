@@ -9,62 +9,70 @@ import Loader from '../Layout/Loader'
 import Sidebar from './SideBar'
 import { errMsg, successMsg } from '../../utils/helpers';
 import axios from 'axios';
-import { getToken } from '../../utils/helpers';
+// import { getToken } from '../../utils/helpers';
+import { useDispatch, useSelector } from 'react-redux'
+import { allUsers,  deleteUser,  clearErrors } from '../../actions/userActions'
+
+import { DELETE_USER_RESET } from '../../constants/userConstants'
 
 const UsersList = () => {
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-    const [allUsers, setAllUsers] = useState([])
-    const [isDeleted, setIsDeleted] = useState('')
+    const dispatch = useDispatch()
+    const { loading, error, users } = useSelector(state => state.allUsers);
+    const { isDeleted } = useSelector(state => state.user)
+    // const [loading, setLoading] = useState(true)
+    // const [error, setError] = useState('')
+    // const [allUsers, setAllUsers] = useState([])
+    // const [isDeleted, setIsDeleted] = useState('')
     let navigate = useNavigate();
-    const config = {
-        headers: {
-            'Content-Type': 'application/json', 
-            'Authorization': `Bearer ${getToken()}`
-        }
-    }
-    const listUsers = async () => {
-        try {
+    // const config = {
+    //     headers: {
+    //         'Content-Type': 'application/json', 
+    //         'Authorization': `Bearer ${getToken()}`
+    //     }
+    // }
+    // const listUsers = async () => {
+    //     try {
 
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/users`, config)
-            setAllUsers(data.users)
-            setLoading(false)
+    //         const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/users`, config)
+    //         setAllUsers(data.users)
+    //         setLoading(false)
 
-        } catch (error) {
-            setError(error.response.data.message)
+    //     } catch (error) {
+    //         setError(error.response.data.message)
             
-        }
-    }
-    const deleteUser = async (id) => {
-        try {
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config)
-            setIsDeleted(data.success)
-            setLoading(false)
+    //     }
+    // }
+    // const deleteUser = async (id) => {
+    //     try {
+    //         const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, config)
+    //         setIsDeleted(data.success)
+    //         setLoading(false)
             
-        } catch (error) {
-           setError(error.response.data.message)
-           setError()
+    //     } catch (error) {
+    //        setError(error.response.data.message)
+    //        setError()
             
-        }
-    }
+    //     }
+    // }
 
     useEffect(() => {
-        listUsers();
+        dispatch(allUsers());
         if (error) {
             errMsg(error);
-            setError('')
+            dispatch(clearErrors())
         }
         if (isDeleted) {
             successMsg('User deleted successfully');
+            dispatch({ type: DELETE_USER_RESET })
             navigate('/admin/users');
 
         }
 
-    }, [error, isDeleted,])
+    }, [error, isDeleted, dispatch])
 
 
     const deleteUserHandler = (id) => {
-       deleteUser(id)
+       dispatch(deleteUser(id))
     }
     const setUsers = () => {
         const data = {
@@ -96,7 +104,7 @@ const UsersList = () => {
             ],
             rows: []
         }
-        allUsers.forEach(user => {
+        users.forEach(user => {
             data.rows.push({
                 id: user._id,
                 name: user.name,
