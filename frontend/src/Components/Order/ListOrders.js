@@ -42,7 +42,7 @@ const ListOrders = () => {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
         }
-    }, [error])
+    }, [error, dispatch])
 
     const setOrders = () => {
         const data = {
